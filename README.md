@@ -28,16 +28,16 @@ Se construirá una tienda en línea que cubra todo el recorrido de compra —des
 - **Administración**: gestión de productos, categorías, promociones, inventario y pedidos.
 
 
-## Herramientas y tecnologías
 
-| Parte | Tecnología | Aplicación |
-|-------|------------|------------|
-| Frontend | React + JavaScript | Visual Studio Code |
-| Backend | Node.js + Express | Visual Studio Code |
-| API | REST API | Postman para probarla |
-| Base de datos | PostgreSQL | DBeaver |
-| Control de versiones | Git + GitHub | Guardar y compartir el proyecto |
-| Editor | Visual Studio Code | Todo el código |
+## Herramientas y tecnologías
+ 
+| Parte | Tecnología |
+|-------|------------|
+| Frontend | React + JavaScript |
+| Backend | Node.js + Express |
+| API | REST API |
+| Base de datos | PostgreSQL |
+| Control de versiones | Git + GitHub |
 
 
 **Intengrantes** 
