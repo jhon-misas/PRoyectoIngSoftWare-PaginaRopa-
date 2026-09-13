@@ -29,18 +29,7 @@ Se construirá una tienda en línea que cubra todo el recorrido de compra —des
 
 
 
-## Herramientas y tecnologías
- 
-| Parte | Tecnología |
-|-------|------------|
-| Frontend | React + JavaScript |
-| Backend | Node.js + Express |
-| API | REST API |
-| Base de datos | PostgreSQL |
-| Control de versiones | Git + GitHub |
-
-
 **Intengrantes** 
-Jhon Alexander Misas 
-Catalina Troncoso Torres
-David Mahecha
+-Jhon Alexander Misas 2220242047
+-Catalina Troncoso Torres 2220242001
+-David Orlando Mahecha Casallas 2220242008
