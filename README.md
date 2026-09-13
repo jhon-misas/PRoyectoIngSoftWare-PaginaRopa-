@@ -27,6 +27,16 @@ Se construirá una tienda en línea que cubra todo el recorrido de compra —des
 - **Historial de pedidos**: consulta de compras anteriores..
 - **Administración**: gestión de productos, categorías, promociones, inventario y pedidos.
 
+| Herramienta | Tecnología | Por qué |
+|-------------|------------|---------|
+| Frontend | React + JavaScript | Curva de aprendizaje suave, gran ecosistema y encaja bien con un despliegue rápido en Vercel. |
+| Backend | Node.js + Express | Mismo lenguaje que el frontend (JavaScript en todo el stack), ligero y con enorme documentación y soporte de la comunidad. |
+| API | REST API | Estándar simple y ampliamente conocido para comunicar frontend y backend, fácil de probar con Postman. |
+| Base de datos | PostgreSQL | Relacional, ideal para datos muy conectados (usuarios, productos, pedidos) y con transacciones confiables para el proceso de pago. |
+| Control de versiones | Git + GitHub | Permite guardar el historial del proyecto, trabajar en equipo y conecta directo con los despliegues automáticos. |
+| Despliegue del frontend | Vercel | Despliegue automático desde GitHub, dominio gratuito para compartir en la sustentación y hecho a la medida de proyectos en React. |
+| Despliegue del backend | Render | Plan gratuito para Express y PostgreSQL en la misma plataforma, con despliegue automático desde el repo sin configurar servidores. |
+
 
 
 **Intengrantes** 
