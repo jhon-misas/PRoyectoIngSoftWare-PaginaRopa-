@@ -1,0 +1,43 @@
+{
+  "name": "proyectoingsoftware-paginaropa-",
+  "version": "1.0.0",
+  "description": "Se propone el desarrollo de una plataforma web para **WUT Colombia**, orientada a la comercialización de ropa deportiva y productos relacionados con la actividad física.",
+  "main": "backend/server.js",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.23.1",
+    "pg-cloudflare": "^1.4.1",
+    "pg-connection-string": "^2.14.1",
+    "pg-int8": "^1.0.1",
+    "pg-pool": "^3.14.0",
+    "pg-protocol": "^1.16.1",
+    "pg-types": "^2.2.0",
+    "pgpass": "^1.0.5",
+    "postgres-array": "^2.0.0",
+    "postgres-bytea": "^1.0.1",
+    "postgres-date": "^1.0.7",
+    "postgres-interval": "^1.2.0",
+    "split2": "^4.2.0",
+    "xtend": "^4.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node backend/server.js",
+    "dev": "node --watch backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhon-misas/PRoyectoIngSoftWare-PaginaRopa-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jhon-misas/PRoyectoIngSoftWare-PaginaRopa-/issues"
+  },
+  "homepage": "https://github.com/jhon-misas/PRoyectoIngSoftWare-PaginaRopa-#readme"
+}
