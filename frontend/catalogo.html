@@ -12,10 +12,9 @@
   <h1 id='titulo' class='titulo-pagina'>CATÁLOGO</h1>
   <section id='lista' class='cuadricula'></section>
   <script src='../js/api.js'></script>
-  <script src='../js/datos-falsos.js'></script>
   <script src='../js/header.js'></script>
   <script>
-    const USAR_FALSOS = true; // true = datos de mentira. Cuando la API real funcione, cambia a false.
+    const USAR_FALSOS = false; // true = datos de mentira. Cuando la API real funcione, cambia a false.
 
     async function cargar() {
       const categoria = new URLSearchParams(location.search).get('categoria');
