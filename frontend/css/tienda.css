@@ -40,3 +40,12 @@
 .tarjeta p { margin: 4px 0; }
 .puntos span { display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin: 0 4px; }
 .tarjeta small { font-size: 11px; letter-spacing: 3px; }
+
+/* Detalle de producto */
+.detalle { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 900px; margin: 30px auto; padding: 0 20px; }
+.detalle img { width: 100%; border-radius: 20px; background: #ddd; }
+.detalle p { margin: 8px 0; }
+.detalle select { padding: 8px; }
+.detalle button:disabled { background: #999; cursor: not-allowed; }
+.precio { font-size: 22px; font-weight: bold; margin: 8px 0 16px; }
+@media (max-width: 700px) { .detalle { grid-template-columns: 1fr; } }
