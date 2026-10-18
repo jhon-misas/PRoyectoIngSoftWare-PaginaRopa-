@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>Carrito · WUT FORCE ARMOUR</title>
+  <link rel='stylesheet' href='css/estilos.css'>
+</head>
+<body>
+  <div id='header'></div>
+  <main class='carrito'>
+    <h1>CARRITO DE COMPRA</h1>
+    <div id='contenido'>Cargando...</div>
+  </main>
+
+  <script src='js/api.js'></script>
+  <script src='js/header.js'></script>
+  <script>
+    // Sin sesión no hay carrito: se manda al login
+    if (!haySesion()) { location.href = 'login.html'; }
+
+    // Si la sesión venció, se borra y se manda al login
+    function sesionVencida() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('usuario');
+      location.href = 'login.html';
+    }
+
+    function esErrorDeSesion(e) {
+      return /sesión|iniciar/i.test(e.message);
+    }
+
+    function dibujar(c) {
+      const caja = document.getElementById('contenido');
+      if (c.items.length === 0) {
+        caja.innerHTML = `<p>Tu carrito está vacío. <a href='catalogo.html'>Ir al catálogo</a></p>`;
+        return;
+      }
+      caja.innerHTML = c.items.map((it) => `
+        <div class='fila-item'>
+          <img src='images/productos/${it.foto}' alt='${it.nombre}' onerror='this.style.opacity=0.2'>
+          <div class='fila-datos'>
+            <strong>${it.nombre}</strong>
+            <span>Talla ${it.talla || '-'}</span>
+            <span>${formatoCOP(it.precio)}</span>
+            <div class='cantidad'>
+              <button onclick='cambiar(${it.idItem}, ${it.cantidad - 1})'>-</button>
+              <span>${it.cantidad}</span>
+              <button onclick='cambiar(${it.idItem}, ${it.cantidad + 1})'>+</button>
+              <button class='quitar' onclick='quitar(${it.idItem})'>Eliminar</button>
+            </div>
+          </div>
+        </div>`).join('') + `
+        <div class='totales'>
+          <p>Subtotal: <strong>${formatoCOP(c.subtotal)}</strong></p>
+          <p>Envío: <strong>${formatoCOP(c.envio)}</strong></p>
+          <p>Total: <strong>${formatoCOP(c.total)}</strong></p>
+          <a class='boton' href='pago.html'>IR A PAGAR</a>
+        </div>`;
+    }
+
+    async function cargar() {
+      try {
+        dibujar(await llamarApi('/carrito'));
+      } catch (e) {
+        if (esErrorDeSesion(e)) { sesionVencida(); return; }
+        document.getElementById('contenido').textContent = e.message;
+      }
+    }
+
+    async function cambiar(idItem, cantidad) {
+      if (cantidad < 1) return;
+      try {
+        dibujar(await llamarApi('/carrito/items/' + idItem, 'PUT', { cantidad: cantidad }));
+      } catch (e) {
+        if (esErrorDeSesion(e)) { sesionVencida(); return; }
+        alert(e.message);
+      }
+    }
+
+    async function quitar(idItem) {
+      try {
+        dibujar(await llamarApi('/carrito/items/' + idItem, 'DELETE'));
+      } catch (e) {
+        if (esErrorDeSesion(e)) { sesionVencida(); return; }
+        alert(e.message);
+      }
+    }
+
+    if (haySesion()) cargar();
+  </script>
+</body>
+</html>

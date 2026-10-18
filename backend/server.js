@@ -25,7 +25,7 @@ res.status(500).json({ ok: false, error: e.message });
 
 app.use('/api/auth', require('./routes/auth')); // Persona 1
 // app.use('/api/productos', require('./routes/productos')); // Persona 2
-// app.use('/api/carrito', require('./routes/carrito')); // Persona 3
+ app.use('/api/carrito', require('./routes/carrito')); 
 // app.use('/api/pedidos', require('./routes/pedidos')); // Persona 3
 
 // Las páginas de la carpeta frontend

@@ -53,3 +53,12 @@ button,
   margin-top: 14px;
   color: var(--gris);
 }
+.carrito { max-width: 700px; margin: 30px auto; padding: 0 20px; }
+.carrito h1 { font-size: 18px; letter-spacing: 2px; margin-bottom: 20px; }
+.fila-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--beige); }
+.fila-item img { width: 90px; height: 110px; object-fit: cover; background: #ddd; }
+.fila-datos { display: flex; flex-direction: column; gap: 4px; }
+.cantidad { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+.cantidad button { padding: 4px 10px; }
+.cantidad .quitar { background: none; color: var(--gris); text-decoration: underline; }
+.totales { margin-top: 20px; text-align: right; line-height: 1.8; }
