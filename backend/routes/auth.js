@@ -54,4 +54,44 @@ router.post('/registro', async (req, res) => {
   }
 });
 
+// POST /api/auth/login
+router.post('/login', async (req, res) => {
+  const { correo, contrasena } = req.body;
+
+  try {
+    const r = await pool.query(
+      `SELECT id_usuario, correo, contrasena, nombre
+       FROM usuarios
+       WHERE correo = $1`,
+      [(correo || '').trim().toLowerCase()]
+    );
+
+    const usuario = r.rows[0];
+    const coincide =
+      usuario && (await bcrypt.compare(contrasena || '', usuario.contrasena));
+
+    if (!coincide) {
+      return res.status(401).json({ error: 'Datos incorrectos' });
+    }
+
+    const token = jwt.sign(
+      { id: usuario.id_usuario, correo: usuario.correo },
+      process.env.JWT_SECRET,
+      { expiresIn: '2h' }
+    );
+
+    res.json({
+      token,
+      usuario: {
+        id: usuario.id_usuario,
+        correo: usuario.correo,
+        nombre: usuario.nombre,
+      },
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+});
+
 module.exports = router;

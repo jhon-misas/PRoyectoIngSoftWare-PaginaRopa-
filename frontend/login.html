@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iniciar sesión · WUT FORCE ARMOUR</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div id="header"></div>
+
+  <main class="contenedor-form">
+    <h1>INICIAR SESIÓN</h1>
+
+    <form id="form-login">
+      <label>
+        Correo electrónico
+        <input type="email" id="correo" required>
+      </label>
+
+      <label>
+        Contraseña
+        <input type="password" id="contrasena" required>
+      </label>
+
+      <br><br>
+
+      <button type="submit">ENTRAR</button>
+      <p class="mensaje" id="mensaje"></p>
+    </form>
+
+    <p>¿No tienes cuenta? <a href="registro.html">Regístrate</a></p>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/header.js"></script>
+
+  <script>
+    document.getElementById('form-login').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const mensaje = document.getElementById('mensaje');
+
+      try {
+        const datos = await llamarApi('/auth/login', 'POST', {
+          correo: document.getElementById('correo').value,
+          contrasena: document.getElementById('contrasena').value
+        });
+
+        localStorage.setItem('token', datos.token);
+        localStorage.setItem('usuario', JSON.stringify(datos.usuario));
+        location.href = 'index.html';
+      } catch (err) {
+        mensaje.textContent = err.message;
+      }
+    });
+  </script>
+</body>
+</html>
