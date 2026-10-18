@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>Pago · WUT FORCE ARMOUR</title>
+  <link rel='stylesheet' href='css/estilos.css'>
+</head>
+<body>
+  <div id='header'></div>
+  <main class='pago'>
+    <a href='carrito.html' class='volver' aria-label='Volver al carrito'>←</a>
+    <div id='resumen'>Cargando...</div>
+
+    <form id='form-pago' class='contenedor-form'>
+      <h2>Contacto</h2>
+      <input type='email' id='correo' placeholder='Correo electrónico' required>
+
+      <h2>Dirección de envío</h2>
+      <input type='text' id='direccion' placeholder='Dirección completa (calle, número, barrio, ciudad)' required>
+
+      <h2>Método de pago</h2>
+      <select id='metodo'>
+        <option value='tarjeta'>Tarjeta</option>
+        <option value='pse'>PSE</option>
+        <option value='contraentrega'>Contra entrega</option>
+      </select>
+
+      <div id='datos-tarjeta'>
+        <input type='text' id='numero' placeholder='Número de tarjeta (16 dígitos)'>
+        <input type='text' id='vencimiento' placeholder='Vencimiento MM/AA'>
+        <input type='text' id='cvv' placeholder='CVV'>
+      </div>
+
+      <br>
+      <button type='submit' id='btn-pagar'>PAGAR</button>
+      <p class='mensaje' id='mensaje'></p>
+    </form>
+  </main>
+
+  <script src='js/api.js'></script>
+  <script src='js/header.js'></script>
+  <script>
+    if (!haySesion()) location.href = 'login.html';
+
+    async function cargar() {
+      try {
+        const carrito = await llamarApi('/carrito');
+        if (carrito.items.length === 0) { location.href = 'carrito.html'; return; }
+        document.getElementById('resumen').innerHTML = `
+          <h2>Resumen del pedido</h2>
+          ${carrito.items.map((it) => `<p>${it.nombre} · Talla ${it.talla || '-'} · x${it.cantidad}</p>`).join('')}
+          <p>Subtotal: ${formatoCOP(carrito.subtotal)}</p>
+          <p>Envío: ${formatoCOP(carrito.envio)}</p>
+          <p><strong>Total: COP ${formatoCOP(carrito.total)}</strong></p>`;
+        document.getElementById('btn-pagar').textContent = 'PAGAR ' + formatoCOP(carrito.total);
+      } catch (e) {
+        document.getElementById('resumen').textContent = e.message;
+      }
+    }
+
+    document.getElementById('metodo').addEventListener('change', (e) => {
+      document.getElementById('datos-tarjeta').style.display = e.target.value === 'tarjeta' ? 'block' : 'none';
+    });
+
+    document.getElementById('form-pago').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const mensaje = document.getElementById('mensaje');
+      try {
+        const r = await llamarApi('/pedidos', 'POST', {
+          correo: document.getElementById('correo').value,
+          direccion: document.getElementById('direccion').value,
+          metodoPago: document.getElementById('metodo').value,
+          datosPago: {
+            numero: document.getElementById('numero').value,
+            vencimiento: document.getElementById('vencimiento').value,
+            cvv: document.getElementById('cvv').value
+          }
+        });
+        document.querySelector('main').innerHTML = `
+          <h1>¡PEDIDO CONFIRMADO!</h1>
+          <p>Tu número de pedido es <strong>${r.idPedido}</strong>.</p>
+          <p>Total pagado: ${formatoCOP(r.total)}</p>
+          <p><a href='carrito.html'>Volver al carrito</a> · <a href='catalogo.html'>Volver a la tienda</a></p>`;
+      } catch (err) {
+        mensaje.textContent = err.message;
+      }
+    });
+
+    cargar();
+  </script>
+</body>
+</html>
