@@ -62,3 +62,9 @@ button,
 .cantidad button { padding: 4px 10px; }
 .cantidad .quitar { background: none; color: var(--gris); text-decoration: underline; }
 .totales { margin-top: 20px; text-align: right; line-height: 1.8; }
+
+.pago { max-width: 600px; margin: 20px auto; padding: 0 20px; }
+.volver { font-size: 28px; text-decoration: none; }
+.pago h2 { font-size: 16px; margin: 20px 0 8px; }
+.pago input, .pago select { width: 100%; padding: 10px; border: 1px solid var(--gris); margin-bottom: 8px; }
+#resumen { background: #C8C8C8; padding: 16px; margin: 12px 0; }
