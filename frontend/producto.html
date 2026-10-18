@@ -11,10 +11,9 @@
   <div id='header'></div>
   <main id='detalle' class='detalle'>Cargando...</main>
   <script src='../js/api.js'></script>
-  <script src='../js/datos-falsos.js'></script>
   <script src='../js/header.js'></script>
   <script>
-    const USAR_FALSOS = true; // true = datos de mentira. Cuando la API real funcione, cambia a false.
+    const USAR_FALSOS = false; // true = datos de mentira. Cuando la API real funcione, cambia a false.
     const id = new URLSearchParams(location.search).get('id');
 
     async function cargar() {
