@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crear cuenta · WUT FORCE ARMOUR</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/tienda.css">
+</head>
+<body>
+  <div id="header"></div>
+
+  <main class="contenedor-form">
+    <h1>CREAR CUENTA</h1>
+
+    <form id="form-registro">
+      <label>
+        Nombre
+        <input type="text" id="nombre" required>
+      </label>
+
+      <label>
+        Correo electrónico
+        <input type="email" id="correo" required>
+      </label>
+
+      <label>
+        Contraseña (mínimo 8 caracteres)
+        <input type="password" id="contrasena" required minlength="8">
+      </label>
+
+      <br><br>
+
+      <button type="submit">CREAR CUENTA</button>
+      <p class="mensaje" id="mensaje"></p>
+    </form>
+
+    <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/header.js"></script>
+
+  <script>
+    document.getElementById('form-registro').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const mensaje = document.getElementById('mensaje');
+
+      try {
+        const datos = await llamarApi('/auth/registro', 'POST', {
+          nombre: document.getElementById('nombre').value,
+          correo: document.getElementById('correo').value,
+          contrasena: document.getElementById('contrasena').value
+        });
+
+        mensaje.textContent = datos.mensaje + '. Te llevamos a iniciar sesión...';
+
+        setTimeout(() => {
+          location.href = 'login.html';
+        }, 1500);
+      } catch (err) {
+        mensaje.textContent = err.message;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>Producto · WUT FORCE ARMOUR</title>
+  <link rel='stylesheet' href='../css/estilos.css'>
+  <link rel='stylesheet' href='../css/tienda.css'>
+</head>
+<body>
+  <div id='header'></div>
+  <main id='detalle' class='detalle'>Cargando...</main>
+  <script src='../js/api.js'></script>
+  <script src='../js/header.js'></script>
+  <script>
+    const USAR_FALSOS = false; // true = datos de mentira. Cuando la API real funcione, cambia a false.
+    const id = new URLSearchParams(location.search).get('id');
+
+    async function cargar() {
+      const caja = document.getElementById('detalle');
+      try {
+        const p = USAR_FALSOS
+          ? PRODUCTOS_FALSOS.find((x) => String(x.id) === id)
+          : await llamarApi('/productos/' + id);
+        if (!p) { caja.textContent = 'Producto no encontrado'; return; }
+        caja.innerHTML = `
+          <img src='images/productos/${p.foto}' alt='${p.nombre}' onerror='this.style.opacity=0.2'>
+          <div>
+            <h1>${p.nombre.toUpperCase()}</h1>
+            <p class='precio'>${formatoCOP(p.precio)}</p>
+            <p>${p.descripcion || ''}</p>
+            <p><strong>Material:</strong> ${p.material || 'No especificado'}</p>
+            <p><strong>Disponibilidad:</strong> ${p.disponible ? 'Disponible' : 'AGOTADO'}</p>
+            <label>Talla
+              <select id='talla'>${p.tallas.map((t) => `<option value='${t.id}'>${t.nombre}</option>`).join('')}</select>
+            </label>
+            <br><br>
+            <button id='btn-agregar' ${p.disponible ? '' : 'disabled'}>${p.disponible ? 'AGREGAR AL CARRITO' : 'AGOTADO'}</button>
+            <p class='mensaje' id='mensaje'></p>
+          </div>`;
+        document.getElementById('btn-agregar').addEventListener('click', () => agregar(p.id));
+      } catch (e) {
+        caja.textContent = e.message;
+      }
+    }
+
+    async function agregar(idProducto) {
+      const mensaje = document.getElementById('mensaje');
+      if (USAR_FALSOS) { mensaje.textContent = 'Modo de prueba: todavía no hay carrito real.'; return; }
+      if (!haySesion()) { location.href = 'login.html'; return; }
+      try {
+        await llamarApi('/carrito/items', 'POST', {
+          idProducto: idProducto,
+          idTalla: Number(document.getElementById('talla').value),
+          cantidad: 1
+        });
+        mensaje.innerHTML = `Agregado al carrito. <a href='carrito.html'>Ver carrito</a>`;
+      } catch (e) {
+        mensaje.textContent = e.message;
+      }
+    }
+    cargar();
+  </script>
+</body>
+</html>

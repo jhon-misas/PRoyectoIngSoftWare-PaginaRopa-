@@ -1,0 +1,70 @@
+:root {
+  --negro: #0B0B0A;
+  --blanco: #FCFCFA;
+  --beige: #EDE7DA;
+  --gris: #726C63;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--blanco);
+  color: var(--negro);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+.boton {
+  background: var(--negro);
+  color: var(--blanco);
+  border: 0;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.contenedor-form {
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.contenedor-form label {
+  display: block;
+  margin: 16px 0 6px;
+}
+
+.contenedor-form input,
+.contenedor-form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--gris);
+}
+
+.mensaje {
+  margin-top: 14px;
+  color: var(--gris);
+}
+.carrito { max-width: 700px; margin: 30px auto; padding: 0 20px; }
+.carrito h1 { font-size: 18px; letter-spacing: 2px; margin-bottom: 20px; }
+.fila-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--beige); }
+.fila-item img { width: 90px; height: 110px; object-fit: cover; background: #ddd; }
+.fila-datos { display: flex; flex-direction: column; gap: 4px; }
+.cantidad { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+.cantidad button { padding: 4px 10px; }
+.cantidad .quitar { background: none; color: var(--gris); text-decoration: underline; }
+.totales { margin-top: 20px; text-align: right; line-height: 1.8; }
+
+.pago { max-width: 600px; margin: 20px auto; padding: 0 20px; }
+.volver { font-size: 28px; text-decoration: none; }
+.pago h2 { font-size: 16px; margin: 20px 0 8px; }
+.pago input, .pago select { width: 100%; padding: 10px; border: 1px solid var(--gris); margin-bottom: 8px; }
+#resumen { background: #C8C8C8; padding: 16px; margin: 12px 0; }

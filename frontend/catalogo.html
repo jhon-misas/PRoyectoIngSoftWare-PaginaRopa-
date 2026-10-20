@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>Catálogo · WUT FORCE ARMOUR</title>
+  <link rel='stylesheet' href='../css/estilos.css'>
+  <link rel='stylesheet' href='../css/tienda.css'>
+</head>
+<body>
+  <div id='header'></div>
+  <h1 id='titulo' class='titulo-pagina'>CATÁLOGO</h1>
+  <section id='lista' class='cuadricula'></section>
+  <script src='../js/api.js'></script>
+  <script src='../js/header.js'></script>
+  <script>
+    const USAR_FALSOS = false; // true = datos de mentira. Cuando la API real funcione, cambia a false.
+
+    async function cargar() {
+      const categoria = new URLSearchParams(location.search).get('categoria');
+      document.getElementById('titulo').textContent = (categoria || 'CATÁLOGO').toUpperCase();
+      const lista = document.getElementById('lista');
+      try {
+        const productos = USAR_FALSOS
+          ? PRODUCTOS_FALSOS.filter((p) => !categoria || p.categoria.toLowerCase() === categoria.toLowerCase())
+          : await llamarApi('/productos' + (categoria ? '?categoria=' + encodeURIComponent(categoria) : ''));
+        if (productos.length === 0) { lista.textContent = 'No hay productos en esta categoría.'; return; }
+        lista.innerHTML = productos.map((p) => `
+          <a class='tarjeta' href='producto.html?id=${p.id}'>
+            <img src='images/productos/${p.foto}' alt='${p.nombre}' onerror='this.style.opacity=0.2'>
+            <h3>${p.nombre.toUpperCase()}</h3>
+            <div class='puntos'>${p.colores.map((c) => `<span style='background:${c.hex}'></span>`).join('')}</div>
+            <p>${formatoCOP(p.precio)}</p>
+            <small>${p.tallas.map((t) => t.nombre).join('  ')}</small>
+            ${p.disponible ? '' : '<p><strong>AGOTADO</strong></p>'}
+          </a>`).join('');
+      } catch (e) {
+        lista.textContent = e.message;
+      }
+    }
+    cargar();
+  </script>
+</body>
+</html>
