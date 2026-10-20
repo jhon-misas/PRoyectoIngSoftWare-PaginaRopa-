@@ -27,7 +27,7 @@
         if (productos.length === 0) { lista.textContent = 'No hay productos en esta categoría.'; return; }
         lista.innerHTML = productos.map((p) => `
           <a class='tarjeta' href='producto.html?id=${p.id}'>
-            <img src='images/productos/${p.foto}' alt='${p.nombre}' onerror='this.style.opacity=0.2'>
+            <img src='images/${p.foto}' alt='${p.nombre}' onerror='this.style.opacity=0.2'>
             <h3>${p.nombre.toUpperCase()}</h3>
             <div class='puntos'>${p.colores.map((c) => `<span style='background:${c.hex}'></span>`).join('')}</div>
             <p>${formatoCOP(p.precio)}</p>
