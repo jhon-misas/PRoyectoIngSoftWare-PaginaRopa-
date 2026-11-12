@@ -7,5 +7,5 @@ export function formatoCOP(numero) {
 // Los productos nuevos traen la dirección completa de Cloudinary; los viejos, solo el nombre del archivo
 export function urlFoto(foto) {
   if (!foto) return '/images/wolf.png';
-  return foto.startsWith('http') ? foto : '/images/productos/' + foto;
+  return foto.startsWith('http') ? foto : '/images/' + foto;
 }

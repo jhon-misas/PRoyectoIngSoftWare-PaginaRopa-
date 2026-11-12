@@ -4,7 +4,7 @@ import { CATEGORIAS } from '../utilidades';
 export default function Inicio() {
   return (
     <>
-      <section className='hero' style={{ backgroundImage: 'url(/images/hero.jpg)' }}>
+      <section className='hero' style={{ backgroundImage: 'url(/images/portada.jpeg)' }}>
         <div className='hero-texto'>
           <h1>WUT FORCE ARMOUR</h1>
           <p>Ropa deportiva para entrenar sin límites.</p>
