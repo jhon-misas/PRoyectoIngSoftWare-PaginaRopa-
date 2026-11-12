@@ -1,1 +1,3 @@
-export default function PiePagina() { return <h1>Pie de Página (en construcción)</h1>; }
+export default function PiePagina() {
+  return <footer className='pie'>WUT FORCE ARMOUR · Ropa deportiva · {new Date().getFullYear()}</footer>;
+}
