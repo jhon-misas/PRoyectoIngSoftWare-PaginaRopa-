@@ -1,0 +1,1 @@
+export default function Detalle() { return <h1>Detalle (en construcción)</h1>; }

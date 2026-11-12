@@ -1,0 +1,1 @@
+export default function AdminFormulario() { return <h1>Administrar Formulario (en construcción)</h1>; }
