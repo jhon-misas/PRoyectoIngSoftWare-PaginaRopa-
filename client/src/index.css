@@ -154,4 +154,9 @@ fieldset { border: 1px solid #EDE7DA; margin: 0 0 12px; padding: 12px; }
   .menu.abierto { display: flex; }
   .detalle, .fila { grid-template-columns: 1fr; }
   .tabla-admin { display: block; overflow-x: auto; }
+
+   .filtro, .talla { color: #0B0B0A; }
+   .filtro.activo, .talla.activa { color: #FCFCFA; }
+   .item-carrito .cantidad button { color: #0B0B0A; background: #FCFCFA; border: 1px solid #0B0B0A; }
+   .item-carrito .cantidad .enlace { color: #B3261E; border: none; background: none; width: auto; }
 }
