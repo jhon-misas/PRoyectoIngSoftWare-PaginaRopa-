@@ -1,0 +1,1 @@
+export default function Encabezado() { return <h1>Encabezado (en construcción)</h1>; }

@@ -1,0 +1,1 @@
+export default function AdminProductos() { return <h1>Administrar Productos (en construcción)</h1>; }

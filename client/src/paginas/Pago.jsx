@@ -1,0 +1,1 @@
+export default function Pago() { return <h1>Pago (en construcción)</h1>; }

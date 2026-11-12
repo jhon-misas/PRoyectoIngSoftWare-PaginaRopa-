@@ -1,0 +1,1 @@
+export default function PiePagina() { return <h1>Pie de Página (en construcción)</h1>; }

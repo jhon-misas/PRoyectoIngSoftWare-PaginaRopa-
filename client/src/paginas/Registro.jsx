@@ -1,0 +1,1 @@
+export default function Registro() { return <h1>Registro (en construcción)</h1>; }

@@ -1,0 +1,1 @@
+export default function Carrito() { return <h1>Carrito (en construcción)</h1>; }
