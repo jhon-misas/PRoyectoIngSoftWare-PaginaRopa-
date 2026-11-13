@@ -30,7 +30,7 @@
     "start": "node backend/server.js",
     "dev": "node --watch backend/server.js",
     "cliente": "npm run dev --prefix client",
-    "build": "npm install --prefix client --include=dev && npm\nrun build --prefix client"
+    "build": "npm install --prefix client --include=dev && npm run build --prefix client"
   },
   "repository": {
     "type": "git",
