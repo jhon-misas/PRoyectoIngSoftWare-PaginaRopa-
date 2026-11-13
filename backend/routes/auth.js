@@ -96,7 +96,8 @@ res.json({
     usuario: {
         id: usuario.id_usuario,
         correo: usuario.correo,
-        nombre: usuario.no
+        nombre: usuario.nombre,
+        esAdmin
     }
 });
   } catch (e) {
