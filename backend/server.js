@@ -30,8 +30,25 @@ app.use('/api/pedidos', require('./routes/pedidos'));
 app.use('/api/admin', require('./routes/admin'));
 
 // Las páginas de la carpeta frontend
-app.use(express.static(path.join(__dirname, '..', 'frontend')));
+// Una ruta /api que no existe responde con error en JSON
+app.use('/api', (req, res) =>
+    res.status(404).json({
+        error: 'Ruta no encontrada'
+    })
+);
 
+// La versión construida de React
+const carpetaReact = path.join(__dirname, '..', 'client', 'dist');
+
+app.use(express.static(carpetaReact));
+
+// Cualquier otra dirección (/catalogo, /admin, /producto/3...) devuelve
+// React, y React Router decide qué página mostrar
+app.use((req, res, next) => {
+    if (req.method !== 'GET') return next();
+
+    res.sendFile(path.join(carpetaReact, 'index.html'));
+});
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
