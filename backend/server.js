@@ -27,6 +27,7 @@ app.use('/api/auth', require('./routes/auth')); // Persona 1
 app.use('/api/productos', require('./routes/productos')); // Persona 2
 app.use('/api/carrito', require('./routes/carrito')); 
 app.use('/api/pedidos', require('./routes/pedidos')); 
+app.use('/api/admin', require('./routes/admin'));
 
 // Las páginas de la carpeta frontend
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
