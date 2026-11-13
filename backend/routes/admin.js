@@ -1,7 +1,22 @@
 const express = require('express');
 const pool = require('../db');
 const soloAdmin = require('../middleware/soloAdmin');
+const multer = require('multer');
+const subirACloudinary = require('../cloudinary');
 
+const subida = multer({
+    storage: multer.memoryStorage(),
+
+    limits: {
+        fileSize: 5 * 1024 * 1024
+    },
+
+    fileFilter: (req, archivo, cb) =>
+        cb(
+            null,
+            ['image/jpeg', 'image/png', 'image/webp'].includes(archivo.mimetype)
+        )
+});
 const router = express.Router();
 
 // Todas las rutas de este archivo son solo para el administrador
@@ -220,6 +235,40 @@ router.delete('/productos/:id', async (req, res) => {
     console.error(e);
     res.status(500).json({ error: 'Error del servidor' });
   }
+});
+
+// POST /api/admin/imagenes (campo del formulario: imagen)
+router.post('/imagenes', (req, res) => {
+    subida.single('imagen')(req, res, async (err) => {
+        if (err) {
+            const mensaje = err.code === 'LIMIT_FILE_SIZE'
+                ? 'La imagen pesa más de 5 MB'
+                : 'No se pudo leer la imagen';
+
+            return res.status(400).json({ error: mensaje });
+        }
+
+        if (!req.file) {
+            return res.status(400).json({
+                error: 'Envía una imagen JPG, PNG o WEBP'
+            });
+        }
+
+        try {
+            const r = await subirACloudinary(req.file.buffer);
+
+            res.status(201).json({
+                url: r.secure_url
+            });
+
+        } catch (e) {
+            console.error(e);
+
+            res.status(500).json({
+                error: 'No se pudo subir la imagen'
+            });
+        }
+    });
 });
 
 module.exports = router;
