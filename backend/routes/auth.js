@@ -74,20 +74,31 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Datos incorrectos' });
     }
 
-    const token = jwt.sign(
-      { id: usuario.id_usuario, correo: usuario.correo },
-      process.env.JWT_SECRET,
-      { expiresIn: '2h' }
-    );
+    const admin = await pool.query(
+    'SELECT 1 FROM administradores WHERE id_usuario = $1',
+    [usuario.id_usuario]
+);
 
-    res.json({
-      token,
-      usuario: {
+const esAdmin = admin.rows.length > 0;
+
+const token = jwt.sign(
+    {
         id: usuario.id_usuario,
         correo: usuario.correo,
-        nombre: usuario.nombre,
-      },
-    });
+        esAdmin
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: '2h' }
+);
+
+res.json({
+    token,
+    usuario: {
+        id: usuario.id_usuario,
+        correo: usuario.correo,
+        nombre: usuario.no
+    }
+});
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'Error del servidor' });
