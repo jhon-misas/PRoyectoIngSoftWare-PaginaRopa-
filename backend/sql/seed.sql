@@ -2,16 +2,17 @@
 -- 1. INSERTAR DATOS BASE (Para que no falle el id_admin y el id_menu)
 -- ==============================================================================
 
--- Creamos un usuario administrador por defecto
+-- Creamos un usuario administrador por defecto.
+-- La contraseña se guarda cifrada con bcrypt (la API compara con bcrypt, nunca texto plano).
+-- Contraseña inicial: Admin12345  -> cámbienla con: npm run crear-admin -- admin@wutforce.com NuevaClave
 INSERT INTO usuarios (correo, contrasena, nombre, direccion, telefono) 
-VALUES ('admin@wutforce.com', 'admin123', 'Administrador WUT', 'Sede Principal', '3001234567');
+VALUES ('admin@wutforce.com', '$2a$10$1VbJcfzxzjAZtlNV1BlLpuxDq2OELblLkwjExTS2Q3d4zK7Q6QPjC', 'Administrador WUT', 'Sede Principal', '3001234567');
 
 -- Lo vinculamos a la tabla administradores
-INSERT INTO administradores (id_usuario, correo, contrasena) 
+INSERT INTO administradores (id_usuario, correo) 
 VALUES (
     (SELECT id_usuario FROM usuarios WHERE correo = 'admin@wutforce.com'),
-    'admin@wutforce.com', 
-    'admin123'
+    'admin@wutforce.com'
 );
 
 -- Creamos la sección del menú
