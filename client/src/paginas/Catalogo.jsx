@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { llamarApi } from '../api';
-import { CATEGORIAS } from '../utilidades';
 import TarjetaProducto from '../componentes/TarjetaProducto';
 
 export default function Catalogo() {
-  const [parametros, setParametros] = useSearchParams();
+  const [parametros] = useSearchParams();
   const categoria = parametros.get('categoria') || '';
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
@@ -20,21 +19,21 @@ export default function Catalogo() {
       .finally(() => setCargando(false));
   }, [categoria]);
 
+  let mensaje = '';
+  if (cargando) mensaje = 'Cargando...';
+  else if (error) mensaje = error;
+  else if (productos.length === 0) mensaje = 'No hay productos en esta categoría.';
+
   return (
-    <section>
-      <h1>{categoria || 'Catálogo'}</h1>
-      <div className='filtros'>
-        <button className={!categoria ? 'filtro activo' : 'filtro'} onClick={() => setParametros({})}>Todo</button>
-        {CATEGORIAS.map((c) => (
-          <button key={c} className={c === categoria ? 'filtro activo' : 'filtro'} onClick={() => setParametros({ categoria: c })}>{c}</button>
-        ))}
-      </div>
-      {cargando && <p>Cargando productos...</p>}
-      {error && <p className='error'>{error}</p>}
-      {!cargando && !error && productos.length === 0 && <p>No hay productos en esta categoría.</p>}
-      <div className='grilla'>
-        {productos.map((p) => <TarjetaProducto key={p.id} producto={p} />)}
-      </div>
-    </section>
+    <>
+      <h1 className='titulo-pagina'>{(categoria || 'Catálogo').toUpperCase()}</h1>
+      {mensaje
+        ? <p className='mensaje-centro'>{mensaje}</p>
+        : (
+          <section className='cuadricula'>
+            {productos.map((p) => <TarjetaProducto key={p.id} producto={p} />)}
+          </section>
+        )}
+    </>
   );
 }

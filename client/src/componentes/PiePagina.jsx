@@ -1,3 +1,4 @@
+// La tienda original no tiene pie de página. Se deja el componente vacío para no tocar App.jsx.
 export default function PiePagina() {
-  return <footer className='pie'>WUT FORCE ARMOUR · Ropa deportiva · {new Date().getFullYear()}</footer>;
+  return null;
 }

@@ -25,22 +25,26 @@ export default function Registro() {
   }
 
   return (
-    <section className='formulario'>
-      <h1>Crear cuenta</h1>
+    <section className='contenedor-form'>
+      <h1>CREAR CUENTA</h1>
       <form onSubmit={enviar}>
-        <label>Nombre
-          <input required value={datos.nombre} onChange={cambiar('nombre')} />
+        <label>
+          Nombre
+          <input type='text' required value={datos.nombre} onChange={cambiar('nombre')} />
         </label>
-        <label>Correo
-          <input required type='email' value={datos.correo} onChange={cambiar('correo')} />
+        <label>
+          Correo electrónico
+          <input type='email' required value={datos.correo} onChange={cambiar('correo')} />
         </label>
-        <label>Contraseña
-          <input required type='password' value={datos.contrasena} onChange={cambiar('contrasena')} />
+        <label>
+          Contraseña (mínimo 8 caracteres)
+          <input type='password' required value={datos.contrasena} onChange={cambiar('contrasena')} />
         </label>
-        {error && <p className='error'>{error}</p>}
-        <button className='boton' disabled={enviando}>{enviando ? 'Creando...' : 'Registrarme'}</button>
+        <br /><br />
+        <button type='submit' disabled={enviando}>{enviando ? 'CREANDO...' : 'CREAR CUENTA'}</button>
+        {error && <p className='mensaje'>{error}</p>}
       </form>
-      <p>¿Ya tienes cuenta? <Link to='/login'>Inicia sesión</Link></p>
+      <p className='enlace-form'>¿Ya tienes cuenta? <Link to='/login'>Inicia sesión</Link></p>
     </section>
   );
 }

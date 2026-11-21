@@ -25,8 +25,7 @@ export default function Pago() {
     setError('');
     setEnviando(true);
     try {
-      const r = await llamarApi('/pedidos', 'POST', { ...datos, datosPago: tarjeta });
-      setPedido(r);
+      setPedido(await llamarApi('/pedidos', 'POST', { ...datos, datosPago: tarjeta }));
     } catch (err) {
       setError(err.message);
       setEnviando(false);
@@ -36,49 +35,63 @@ export default function Pago() {
   if (pedido) {
     return (
       <section className='pago'>
-        <h1>¡Pedido confirmado!</h1>
+        <h1>¡PEDIDO CONFIRMADO!</h1>
         <p>Tu número de pedido es <strong>{pedido.idPedido}</strong>.</p>
         <p>Total pagado: {formatoCOP(pedido.total)}</p>
-        <Link to='/catalogo' className='boton'>Volver a la tienda</Link>
+        <p><Link to='/carrito'>Volver al carrito</Link> · <Link to='/catalogo'>Volver a la tienda</Link></p>
       </section>
     );
   }
 
-  if (!carrito) return error ? <p className='error'>{error}</p> : <p>Cargando...</p>;
-
   return (
     <section className='pago'>
-      <Link to='/carrito'>← Volver al carrito</Link>
-      <h1>Pago</h1>
-      <div className='resumen'>
-        <h2>Resumen del pedido</h2>
-        {carrito.items.map((it) => <p key={it.idItem}>{it.nombre} · Talla {it.talla || '-'} · x{it.cantidad}</p>)}
-        <p>Subtotal: {formatoCOP(carrito.subtotal)}</p>
-        <p>Envío: {formatoCOP(carrito.envio)}</p>
-        <p><strong>Total: {formatoCOP(carrito.total)}</strong></p>
+      <Link to='/carrito' className='volver' aria-label='Volver al carrito'>←</Link>
+      <div id='resumen'>
+        {!carrito
+          ? (error || 'Cargando...')
+          : (
+            <>
+              <h2>Resumen del pedido</h2>
+              {carrito.items.map((it) => <p key={it.idItem}>{it.nombre} · Talla {it.talla || '-'} · x{it.cantidad}</p>)}
+              <p>Subtotal: {formatoCOP(carrito.subtotal)}</p>
+              <p>Envío: {formatoCOP(carrito.envio)}</p>
+              <p><strong>Total: COP {formatoCOP(carrito.total)}</strong></p>
+            </>
+          )}
       </div>
-      <form onSubmit={pagar}>
-        <label>Correo<input type='email' required value={datos.correo} onChange={(e) => setDatos({ ...datos, correo: e.target.value })} /></label>
-        <label>Dirección de envío<input required minLength='10' value={datos.direccion} onChange={(e) => setDatos({ ...datos, direccion: e.target.value })} /></label>
-        <label>Método de pago
-          <select value={datos.metodoPago} onChange={(e) => setDatos({ ...datos, metodoPago: e.target.value })}>
-            <option value='tarjeta'>Tarjeta</option>
-            <option value='pse'>PSE</option>
-            <option value='contraentrega'>Contra entrega</option>
-          </select>
-        </label>
+
+      <form className='contenedor-form' onSubmit={pagar}>
+        <h2>Contacto</h2>
+        <input type='email' placeholder='Correo electrónico' required value={datos.correo}
+          onChange={(e) => setDatos({ ...datos, correo: e.target.value })} />
+
+        <h2>Dirección de envío</h2>
+        <input type='text' placeholder='Dirección completa (calle, número, barrio, ciudad)' required minLength='10'
+          value={datos.direccion} onChange={(e) => setDatos({ ...datos, direccion: e.target.value })} />
+
+        <h2>Método de pago</h2>
+        <select value={datos.metodoPago} onChange={(e) => setDatos({ ...datos, metodoPago: e.target.value })}>
+          <option value='tarjeta'>Tarjeta</option>
+          <option value='pse'>PSE</option>
+          <option value='contraentrega'>Contra entrega</option>
+        </select>
+
         {datos.metodoPago === 'tarjeta' && (
-          <fieldset>
-            <legend>Datos de la tarjeta (simulado, no se guardan)</legend>
-            <label>Número (16 dígitos)<input inputMode='numeric' value={tarjeta.numero} onChange={(e) => setTarjeta({ ...tarjeta, numero: e.target.value })} /></label>
-            <div className='fila'>
-              <label>Vencimiento MM/AA<input value={tarjeta.vencimiento} onChange={(e) => setTarjeta({ ...tarjeta, vencimiento: e.target.value })} /></label>
-              <label>CVV<input inputMode='numeric' value={tarjeta.cvv} onChange={(e) => setTarjeta({ ...tarjeta, cvv: e.target.value })} /></label>
-            </div>
-          </fieldset>
+          <div>
+            <input type='text' inputMode='numeric' placeholder='Número de tarjeta (16 dígitos)' value={tarjeta.numero}
+              onChange={(e) => setTarjeta({ ...tarjeta, numero: e.target.value })} />
+            <input type='text' placeholder='Vencimiento MM/AA' value={tarjeta.vencimiento}
+              onChange={(e) => setTarjeta({ ...tarjeta, vencimiento: e.target.value })} />
+            <input type='text' inputMode='numeric' placeholder='CVV' value={tarjeta.cvv}
+              onChange={(e) => setTarjeta({ ...tarjeta, cvv: e.target.value })} />
+          </div>
         )}
-        {error && <p className='error'>{error}</p>}
-        <button className='boton' disabled={enviando}>{enviando ? 'Procesando...' : 'Pagar ' + formatoCOP(carrito.total)}</button>
+
+        <br />
+        <button type='submit' disabled={enviando || !carrito}>
+          {enviando ? 'PROCESANDO...' : 'PAGAR' + (carrito ? ' ' + formatoCOP(carrito.total) : '')}
+        </button>
+        {error && carrito && <p className='mensaje'>{error}</p>}
       </form>
     </section>
   );

@@ -11,7 +11,7 @@ export default function Carrito() {
     llamarApi('/carrito').then(setCarrito).catch((e) => setError(e.message));
   }, []);
 
-  async function cambiarCantidad(idItem, cantidad) {
+  async function cambiar(idItem, cantidad) {
     if (cantidad < 1) return;
     setError('');
     try {
@@ -30,45 +30,45 @@ export default function Carrito() {
     }
   }
 
-  if (!carrito) return error ? <p className='error'>{error}</p> : <p>Cargando carrito...</p>;
-
-  if (carrito.items.length === 0) {
-    return (
-      <section>
-        <h1>Tu carrito</h1>
-        <p>Tu carrito está vacío.</p>
-        <Link to='/catalogo' className='boton'>Ir al catálogo</Link>
-      </section>
+  let contenido;
+  if (!carrito) {
+    contenido = <p>{error || 'Cargando...'}</p>;
+  } else if (carrito.items.length === 0) {
+    contenido = <p>Tu carrito está vacío. <Link to='/catalogo'>Ir al catálogo</Link></p>;
+  } else {
+    contenido = (
+      <>
+        {carrito.items.map((it) => (
+          <div className='fila-item' key={it.idItem}>
+            <img src={urlFoto(it.foto)} alt={it.nombre} />
+            <div className='fila-datos'>
+              <Link to={'/producto/' + it.idProducto}><strong>{it.nombre}</strong></Link>
+              <span>Talla {it.talla || '-'}</span>
+              <span>{formatoCOP(it.precio)}</span>
+              <div className='cantidad'>
+                <button onClick={() => cambiar(it.idItem, it.cantidad - 1)} aria-label='Quitar uno'>-</button>
+                <span>{it.cantidad}</span>
+                <button onClick={() => cambiar(it.idItem, it.cantidad + 1)} aria-label='Agregar uno'>+</button>
+                <button className='quitar' onClick={() => quitar(it.idItem)}>Eliminar</button>
+              </div>
+            </div>
+          </div>
+        ))}
+        {error && <p className='mensaje'>{error}</p>}
+        <div className='totales'>
+          <p>Subtotal: <strong>{formatoCOP(carrito.subtotal)}</strong></p>
+          <p>Envío: <strong>{formatoCOP(carrito.envio)}</strong></p>
+          <p>Total: <strong>{formatoCOP(carrito.total)}</strong></p>
+          <Link className='boton' to='/pago'>IR A PAGAR</Link>
+        </div>
+      </>
     );
   }
 
   return (
-    <section>
-      <h1>Tu carrito</h1>
-      {error && <p className='error'>{error}</p>}
-      {carrito.items.map((it) => (
-        <div className='item-carrito' key={it.idItem}>
-          <img src={urlFoto(it.foto)} alt={it.nombre} />
-          <div>
-            <Link to={'/producto/' + it.idProducto}><strong>{it.nombre}</strong></Link>
-            <p>Talla {it.talla || '-'} · {formatoCOP(it.precio)}</p>
-            <div className='cantidad'>
-              <button style={{ color: '#0B0B0A', background: '#FCFCFA' }} onClick={() => cambiarCantidad(it.idItem, it.cantidad - 1)} aria-label='Quitar uno'>−</button>
-              <span>{it.cantidad}</span>
-              <button style={{ color: '#0B0B0A', background: '#FCFCFA' }} onClick={() => cambiarCantidad(it.idItem, it.cantidad + 1)} aria-label='Agregar uno'>+</button>
-              <button style={{ color: '#B3261E', background: 'none', border: 'none', width: 'auto', textDecoration: 'underline' }} onClick={() => quitar(it.idItem)}>Eliminar</button>
-            </div>
-          </div>
-          <strong>{formatoCOP(it.subtotal)}</strong>
-        </div>
-      ))}
-      <div className='resumen'>
-        <p>Subtotal: {formatoCOP(carrito.subtotal)}</p>
-        <p>Envío: {formatoCOP(carrito.envio)}</p>
-        <p><strong>Total: {formatoCOP(carrito.total)}</strong></p>
-      </div>
-      <Link to='/pago' className='boton'>Ir a pagar</Link>
+    <section className='carrito'>
+      <h1>CARRITO DE COMPRA</h1>
+      {contenido}
     </section>
   );
-
 }
