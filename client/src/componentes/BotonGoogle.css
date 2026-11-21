@@ -1,0 +1,14 @@
+/* Botón de Google en Login y Registro (tarea C4) */
+.login-google {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.separador-google {
+  width: 100%;
+  text-align: center;
+  color: #777;
+  margin: 0 0 12px;
+}
