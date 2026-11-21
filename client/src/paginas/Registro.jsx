@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { llamarApi } from '../api';
+import BotonGoogle from '../componentes/BotonGoogle';
 
 export default function Registro() {
   const navegar = useNavigate();
@@ -44,6 +45,7 @@ export default function Registro() {
         <button type='submit' disabled={enviando}>{enviando ? 'CREANDO...' : 'CREAR CUENTA'}</button>
         {error && <p className='mensaje'>{error}</p>}
       </form>
+      <BotonGoogle />
       <p className='enlace-form'>¿Ya tienes cuenta? <Link to='/login'>Inicia sesión</Link></p>
     </section>
   );

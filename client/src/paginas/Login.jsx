@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { llamarApi } from '../api';
 import { useSesion } from '../sesion';
+import BotonGoogle from '../componentes/BotonGoogle';
 
 export default function Login() {
   const navegar = useNavigate();
@@ -45,7 +46,10 @@ export default function Login() {
         <button type='submit' disabled={enviando}>{enviando ? 'ENTRANDO...' : 'ENTRAR'}</button>
         {error && <p className='mensaje'>{error}</p>}
       </form>
+      <BotonGoogle />
       <p className='enlace-form'>¿No tienes cuenta? <Link to='/registro'>Regístrate</Link></p>
     </section>
   );
 }
+
+
