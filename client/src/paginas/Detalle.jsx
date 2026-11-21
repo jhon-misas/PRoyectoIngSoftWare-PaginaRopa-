@@ -10,9 +10,9 @@ export default function Detalle() {
   const { haySesion } = useSesion();
   const [p, setP] = useState(null);
   const [error, setError] = useState('');
-  const [idTalla, setIdTalla] = useState(null);
-  const [cantidad, setCantidad] = useState(1);
+  const [idTalla, setIdTalla] = useState('');
   const [mensaje, setMensaje] = useState('');
+  const [agregado, setAgregado] = useState(false);
 
   useEffect(() => {
     setP(null);
@@ -20,7 +20,7 @@ export default function Detalle() {
     llamarApi('/productos/' + id)
       .then((datos) => {
         setP(datos);
-        setIdTalla(datos.tallas[0]?.id ?? null);
+        setIdTalla(datos.tallas[0] ? String(datos.tallas[0].id) : '');
       })
       .catch((e) => setError(e.message));
   }, [id]);
@@ -28,43 +28,39 @@ export default function Detalle() {
   async function agregar() {
     if (!haySesion) return navegar('/login', { state: { volverA: '/producto/' + id } });
     setMensaje('');
+    setAgregado(false);
     try {
-      await llamarApi('/carrito/items', 'POST', { idProducto: p.id, idTalla, cantidad });
-      setMensaje('Producto agregado al carrito');
+      await llamarApi('/carrito/items', 'POST', { idProducto: p.id, idTalla: Number(idTalla), cantidad: 1 });
+      setAgregado(true);
     } catch (e) {
       setMensaje(e.message);
     }
   }
 
-  if (error) return <p className='error'>{error}. <Link to='/catalogo'>Volver al catálogo</Link></p>;
-  if (!p) return <p>Cargando...</p>;
+  if (error) return <section className='detalle'><p>{error}. <Link to='/catalogo'>Volver al catálogo</Link></p></section>;
+  if (!p) return <section className='detalle'><p>Cargando...</p></section>;
 
   const hayStock = p.disponible && p.cantidad > 0;
   return (
     <section className='detalle'>
       <img src={urlFoto(p.foto)} alt={p.nombre} />
       <div>
-        <Link to='/catalogo'>← Catálogo</Link>
-        <h1>{p.nombre}</h1>
+        <h1>{p.nombre.toUpperCase()}</h1>
         <p className='precio'>{formatoCOP(p.precio)}</p>
-        {p.descripcion && <p>{p.descripcion}</p>}
-        {p.material && <p><strong>Material:</strong> {p.material}</p>}
-        {p.colores.length > 0 && <p><strong>Colores:</strong> {p.colores.map((c) => c.nombre).join(', ')}</p>}
+        <p>{p.descripcion || ''}</p>
+        <p><strong>Material:</strong> {p.material || 'No especificado'}</p>
+        <p><strong>Disponibilidad:</strong> {hayStock ? 'Disponible' : 'AGOTADO'}</p>
         {p.tallas.length > 0 && (
-          <div className='tallas'>
-            {p.tallas.map((t) => (
-              <button key={t.id} className={t.id === idTalla ? 'talla activa' : 'talla'} onClick={() => setIdTalla(t.id)}>{t.nombre}</button>
-            ))}
-          </div>
-        )}
-        <form onSubmit={(e) => { e.preventDefault(); agregar(); }}>
-          <label>Cantidad
-            <input type='number' min='1' max={Math.max(1, p.cantidad)} value={cantidad}
-              onChange={(e) => setCantidad(Math.max(1, Number(e.target.value) || 1))} />
+          <label>Talla{' '}
+            <select value={idTalla} onChange={(e) => setIdTalla(e.target.value)}>
+              {p.tallas.map((t) => <option key={t.id} value={t.id}>{t.nombre}</option>)}
+            </select>
           </label>
-          <button className='boton' disabled={!hayStock}>{hayStock ? 'Agregar al carrito' : 'Agotado'}</button>
-        </form>
-        {mensaje && <p className='aviso'>{mensaje} {mensaje.includes('agregado') && <Link to='/carrito'>Ver carrito</Link>}</p>}
+        )}
+        <br /><br />
+        <button onClick={agregar} disabled={!hayStock}>{hayStock ? 'AGREGAR AL CARRITO' : 'AGOTADO'}</button>
+        {agregado && <p className='mensaje'>Agregado al carrito. <Link to='/carrito'>Ver carrito</Link></p>}
+        {mensaje && <p className='mensaje'>{mensaje}</p>}
       </div>
     </section>
   );

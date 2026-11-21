@@ -35,7 +35,7 @@ export default function AdminProductos() {
   const visibles = productos.filter((p) => p.nombre.toLowerCase().includes(filtro.toLowerCase()));
 
   return (
-    <section>
+    <section className='admin'>
       <div className='admin-barra'>
         <h1>Productos</h1>
         <Link to='/admin/productos/nuevo' className='boton'>+ Nuevo producto</Link>

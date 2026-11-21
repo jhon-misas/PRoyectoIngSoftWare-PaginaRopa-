@@ -20,7 +20,7 @@ export default function Login() {
     try {
       const r = await llamarApi('/auth/login', 'POST', { correo, contrasena });
       iniciarSesion(r.token, r.usuario);
-      const destino = ubicacion.state?.volverA || (r.usuario.esAdmin ? '/admin' : '/catalogo');
+      const destino = ubicacion.state?.volverA || (r.usuario.esAdmin ? '/admin' : '/');
       navegar(destino, { replace: true });
     } catch (err) {
       setError(err.message);
@@ -29,20 +29,23 @@ export default function Login() {
   }
 
   return (
-    <section className='formulario'>
-      <h1>Iniciar sesión</h1>
-      {aviso && <p className='aviso'>{aviso}</p>}
+    <section className='contenedor-form'>
+      <h1>INICIAR SESIÓN</h1>
+      {aviso && <p className='mensaje'>{aviso}</p>}
       <form onSubmit={enviar}>
-        <label>Correo
-          <input required type='email' value={correo} onChange={(e) => setCorreo(e.target.value)} />
+        <label>
+          Correo electrónico
+          <input type='email' required value={correo} onChange={(e) => setCorreo(e.target.value)} />
         </label>
-        <label>Contraseña
-          <input required type='password' value={contrasena} onChange={(e) => setContrasena(e.target.value)} />
+        <label>
+          Contraseña
+          <input type='password' required value={contrasena} onChange={(e) => setContrasena(e.target.value)} />
         </label>
-        {error && <p className='error'>{error}</p>}
-        <button className='boton' disabled={enviando}>{enviando ? 'Entrando...' : 'Entrar'}</button>
+        <br /><br />
+        <button type='submit' disabled={enviando}>{enviando ? 'ENTRANDO...' : 'ENTRAR'}</button>
+        {error && <p className='mensaje'>{error}</p>}
       </form>
-      <p>¿No tienes cuenta? <Link to='/registro'>Regístrate</Link></p>
+      <p className='enlace-form'>¿No tienes cuenta? <Link to='/registro'>Regístrate</Link></p>
     </section>
   );
 }
