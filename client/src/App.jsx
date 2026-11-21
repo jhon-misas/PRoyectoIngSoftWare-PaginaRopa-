@@ -9,6 +9,7 @@ import Registro from './paginas/Registro';
 import Login from './paginas/Login';
 import Carrito from './paginas/Carrito';
 import Pago from './paginas/Pago';
+import PagoResultado from './paginas/PagoResultado';
 import NoEncontrada from './paginas/NoEncontrada';
 import AdminProductos from './paginas/admin/AdminProductos';
 import AdminFormulario from './paginas/admin/AdminFormulario';
@@ -26,6 +27,7 @@ export default function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/carrito' element={<RutaProtegida><Carrito /></RutaProtegida>} />
           <Route path='/pago' element={<RutaProtegida><Pago /></RutaProtegida>} />
+          <Route path='/pago/resultado' element={<RutaProtegida><PagoResultado /></RutaProtegida>} />
           <Route path='/admin' element={<RutaProtegida soloAdmin><AdminProductos /></RutaProtegida>} />
           <Route path='/admin/productos/nuevo' element={<RutaProtegida soloAdmin><AdminFormulario /></RutaProtegida>} />
           <Route path='/admin/productos/:id' element={<RutaProtegida soloAdmin><AdminFormulario /></RutaProtegida>} />

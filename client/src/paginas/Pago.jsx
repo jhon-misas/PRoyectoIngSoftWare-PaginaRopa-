@@ -8,8 +8,7 @@ export default function Pago() {
   const navegar = useNavigate();
   const { usuario } = useSesion();
   const [carrito, setCarrito] = useState(null);
-  const [datos, setDatos] = useState({ correo: usuario?.correo || '', direccion: '', metodoPago: 'tarjeta' });
-  const [tarjeta, setTarjeta] = useState({ numero: '', vencimiento: '', cvv: '' });
+  const [datos, setDatos] = useState({ correo: usuario?.correo || '', direccion: '', metodoPago: 'mercadopago' });
   const [error, setError] = useState('');
   const [enviando, setEnviando] = useState(false);
   const [pedido, setPedido] = useState(null);
@@ -25,7 +24,13 @@ export default function Pago() {
     setError('');
     setEnviando(true);
     try {
-      setPedido(await llamarApi('/pedidos', 'POST', { ...datos, datosPago: tarjeta }));
+      const r = await llamarApi('/pedidos', 'POST', datos);
+      if (r.urlPago) {
+        // Pago en línea: la persona paga en la página segura de Mercado Pago y vuelve a /pago/resultado
+        window.location.assign(r.urlPago);
+        return;
+      }
+      setPedido(r);
     } catch (err) {
       setError(err.message);
       setEnviando(false);
@@ -37,7 +42,7 @@ export default function Pago() {
       <section className='pago'>
         <h1>¡PEDIDO CONFIRMADO!</h1>
         <p>Tu número de pedido es <strong>{pedido.idPedido}</strong>.</p>
-        <p>Total pagado: {formatoCOP(pedido.total)}</p>
+        <p>Total a pagar al recibir: {formatoCOP(pedido.total)}</p>
         <p><Link to='/carrito'>Volver al carrito</Link> · <Link to='/catalogo'>Volver a la tienda</Link></p>
       </section>
     );
@@ -71,25 +76,17 @@ export default function Pago() {
 
         <h2>Método de pago</h2>
         <select value={datos.metodoPago} onChange={(e) => setDatos({ ...datos, metodoPago: e.target.value })}>
-          <option value='tarjeta'>Tarjeta</option>
-          <option value='pse'>PSE</option>
+          <option value='mercadopago'>Pago en línea: tarjeta, PSE o Efecty (Mercado Pago)</option>
           <option value='contraentrega'>Contra entrega</option>
         </select>
 
-        {datos.metodoPago === 'tarjeta' && (
-          <div>
-            <input type='text' inputMode='numeric' placeholder='Número de tarjeta (16 dígitos)' value={tarjeta.numero}
-              onChange={(e) => setTarjeta({ ...tarjeta, numero: e.target.value })} />
-            <input type='text' placeholder='Vencimiento MM/AA' value={tarjeta.vencimiento}
-              onChange={(e) => setTarjeta({ ...tarjeta, vencimiento: e.target.value })} />
-            <input type='text' inputMode='numeric' placeholder='CVV' value={tarjeta.cvv}
-              onChange={(e) => setTarjeta({ ...tarjeta, cvv: e.target.value })} />
-          </div>
+        {datos.metodoPago === 'mercadopago' && (
+          <p>Al pulsar PAGAR irás a la página segura de Mercado Pago para completar el pago. Tus datos bancarios no pasan por nuestra tienda.</p>
         )}
 
         <br />
         <button type='submit' disabled={enviando || !carrito}>
-          {enviando ? 'PROCESANDO...' : 'PAGAR' + (carrito ? ' ' + formatoCOP(carrito.total) : '')}
+          {enviando ? (datos.metodoPago === 'mercadopago' ? 'REDIRIGIENDO A MERCADO PAGO...' : 'PROCESANDO...') : 'PAGAR' + (carrito ? ' ' + formatoCOP(carrito.total) : '')}
         </button>
         {error && carrito && <p className='mensaje'>{error}</p>}
       </form>
