@@ -31,6 +31,8 @@
     "dev": "node --watch backend/server.js",
     "cliente": "npm run dev --prefix client",
     "build": "npm install --prefix client --include=dev && npm run build --prefix client",
+    "crear-bd": "node backend/sql/crear-bd.js",
+    "crear-admin": "node backend/sql/crear-admin.js",
     "importar-catalogo": "node backend/sql/importar-catalogo.js"
   },
   "repository": {
