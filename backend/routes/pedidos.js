@@ -114,6 +114,28 @@ router.post('/', verificarToken, async (req, res) => {
     );
     if (items.rows.length === 0) throw new Error('VACIO');
 
+    // Stock: suma lo que se pide de cada producto y lo compara con lo que hay.
+    // FOR UPDATE bloquea esas filas hasta el COMMIT, para que dos compras al mismo
+    // tiempo no vendan la misma última unidad.
+    const pedidoPorProducto = {};
+    for (const it of items.rows) {
+      pedidoPorProducto[it.id_producto] = (pedidoPorProducto[it.id_producto] || 0) + it.cantidad;
+    }
+    const stock = await cliente.query(
+      'SELECT id_producto, nombre, cantidad, disponible FROM productos WHERE id_producto = ANY($1::int[]) FOR UPDATE',
+      [Object.keys(pedidoPorProducto).map(Number)]
+    );
+    for (const prod of stock.rows) {
+      const pedidas = pedidoPorProducto[prod.id_producto];
+      if (!prod.disponible || prod.cantidad < pedidas) {
+        const error = new Error('STOCK');
+        error.detalle = prod.cantidad > 0 && prod.disponible
+          ? `Solo quedan ${prod.cantidad} unidades de ${prod.nombre}`
+          : `${prod.nombre} está agotado`;
+        throw error;
+      }
+    }
+
     subtotal = items.rows.reduce((suma, it) => suma + it.precio * it.cantidad, 0);
     total = subtotal + ENVIO;
 
@@ -153,6 +175,10 @@ router.post('/', verificarToken, async (req, res) => {
     // queda aprobado, para que si el pago falla la persona no pierda su carrito.
     if (!enLinea) {
       await cliente.query('DELETE FROM items_carrito WHERE id_carrito = $1', [idCarrito]);
+      // Contra entrega: el pedido queda confirmado, así que el stock se descuenta ya.
+      for (const [idProd, unidades] of Object.entries(pedidoPorProducto)) {
+        await cliente.query('UPDATE productos SET cantidad = cantidad - $1 WHERE id_producto = $2', [unidades, Number(idProd)]);
+      }
     }
 
     await cliente.query('COMMIT');
@@ -160,6 +186,7 @@ router.post('/', verificarToken, async (req, res) => {
     await cliente.query('ROLLBACK');
     cliente.release();
     if (e.message === 'VACIO') return res.status(400).json({ error: 'Tu carrito está vacío' });
+    if (e.message === 'STOCK') return res.status(400).json({ error: e.detalle });
     console.error(e);
     return res.status(500).json({ error: 'Error del servidor' });
   }
@@ -208,7 +235,7 @@ router.get('/mercadopago/confirmar', verificarToken, async (req, res) => {
     await cliente.query('BEGIN');
 
     const fila = await cliente.query(
-      `SELECT pa.id_pago, pe.id_pedido, pe.total::float AS total
+      `SELECT pa.id_pago, pe.id_pedido, pe.total::float AS total, pe.estado AS estado_anterior
        FROM pagos pa
        JOIN pedidos pe ON pe.id_pedido = pa.id_pedido
        WHERE pa.datos_pago = $1 AND pe.id_usuario = $2
@@ -219,7 +246,7 @@ router.get('/mercadopago/confirmar', verificarToken, async (req, res) => {
       await cliente.query('ROLLBACK');
       return res.status(404).json({ error: 'Ese pago no corresponde a ninguno de tus pedidos' });
     }
-    const { id_pago: idFilaPago, id_pedido: idPedido, total } = fila.rows[0];
+    const { id_pago: idFilaPago, id_pedido: idPedido, total, estado_anterior: estadoAnterior } = fila.rows[0];
 
     if (Math.round(Number(pago.transaction_amount)) !== Math.round(total) || pago.currency_id !== 'COP') {
       await cliente.query('ROLLBACK');
@@ -230,6 +257,18 @@ router.get('/mercadopago/confirmar', verificarToken, async (req, res) => {
 
     await cliente.query('UPDATE pagos SET estado = $1 WHERE id_pago = $2', [estadoPago, idFilaPago]);
     await cliente.query('UPDATE pedidos SET estado = $1 WHERE id_pedido = $2', [estadoPedido, idPedido]);
+
+    // El stock se descuenta la primera vez que el pago queda aprobado. Si la persona
+    // recarga la página de resultado, el pedido ya está 'confirmado' y no se descuenta otra vez.
+    if (pago.status === 'approved' && estadoAnterior !== 'confirmado') {
+      await cliente.query(
+        `UPDATE productos p SET cantidad = GREATEST(p.cantidad - x.unidades, 0)
+         FROM (SELECT id_producto, SUM(cantidad) AS unidades FROM items_pedido
+               WHERE id_pedido = $1 AND id_producto IS NOT NULL GROUP BY id_producto) x
+         WHERE p.id_producto = x.id_producto`,
+        [idPedido]
+      );
+    }
 
     if (pago.status === 'approved') {
       await cliente.query(

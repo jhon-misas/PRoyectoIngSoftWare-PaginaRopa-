@@ -11,4 +11,11 @@ const pool = new Pool({
   ssl: esLocal ? false : { rejectUnauthorized: false }
 });
 
+// Neon cierra las conexiones que quedan inactivas. Sin este manejador,
+// ese aviso apaga todo el servidor. Con él, solo se registra y el pool
+// abre una conexión nueva en la siguiente consulta.
+pool.on('error', (err) => {
+  console.error('La base de datos cerró una conexión inactiva:', err.message);
+});
+
 module.exports = pool;
