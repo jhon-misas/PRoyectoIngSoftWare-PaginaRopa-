@@ -1,0 +1,171 @@
+:root {
+  --negro: #0B0B0A;
+  --blanco: #FCFCFA;
+  --beige: #EDE7DA;
+  --gris: #726C63;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--blanco);
+  color: var(--negro);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+.boton {
+  background: var(--negro);
+  color: var(--blanco);
+  border: 0;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.contenedor-form {
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.contenedor-form label {
+  display: block;
+  margin: 16px 0 6px;
+}
+
+.contenedor-form input,
+.contenedor-form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--gris);
+}
+
+.mensaje {
+  margin-top: 14px;
+  color: var(--gris);
+}
+.carrito { max-width: 700px; margin: 30px auto; padding: 0 20px; }
+.carrito h1 { font-size: 18px; letter-spacing: 2px; margin-bottom: 20px; }
+.fila-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--beige); }
+.fila-item img { width: 90px; height: 110px; object-fit: cover; background: #ddd; }
+.fila-datos { display: flex; flex-direction: column; gap: 4px; }
+.cantidad { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+.cantidad button { padding: 4px 10px; }
+.cantidad .quitar { background: none; color: var(--gris); text-decoration: underline; }
+.totales { margin-top: 20px; text-align: right; line-height: 1.8; }
+
+.pago { max-width: 600px; margin: 20px auto; padding: 0 20px; }
+.volver { font-size: 28px; text-decoration: none; }
+.pago h2 { font-size: 16px; margin: 20px 0 8px; }
+.pago input, .pago select { width: 100%; padding: 10px; border: 1px solid var(--gris); margin-bottom: 8px; }
+#resumen { background: #C8C8C8; padding: 16px; margin: 12px 0; }
+
+
+/* ================= tienda.css (diseño original) ================= */
+/* Encabezado */
+.encabezado { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: #FCFCFA; border-bottom: 1px solid #EDE7DA; }
+.enc-lado { display: flex; gap: 18px; align-items: center; min-width: 90px; }
+.enc-der { justify-content: flex-end; }
+.enc-logo img { height: 48px; display: block; }
+.encabezado a, .encabezado button { display: flex; align-items: center; color: #0B0B0A; text-decoration: none; }
+.encabezado button { background: none; padding: 0; }
+.encabezado svg { width: 24px; height: 24px; display: block; }
+.franja-envio { background: #A8A8A8; overflow: hidden; white-space: nowrap; padding: 6px 0; font-weight: bold; font-size: 12px; letter-spacing: 1px; }
+.franja-pista { display: inline-flex; animation: deslizar 30s linear infinite; }
+.franja-pista span { padding: 0 40px; }
+.franja-envio:hover .franja-pista { animation-play-state: paused; }
+@keyframes deslizar { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .franja-pista { animation: none; } }
+
+/* Menú lateral */
+.panel-menu { position: fixed; top: 0; left: -320px; width: 300px; height: 100%; background: #FCFCFA; padding: 24px; overflow-y: auto; transition: left 0.3s; z-index: 20; }
+.panel-menu.abierto { left: 0; }
+.panel-menu button { background: none; color: #0B0B0A; padding: 0 0 12px; font-size: 24px; }
+.panel-menu h2 { font-size: 16px; margin-bottom: 8px; }
+.panel-menu h3 { margin: 18px 0 8px; font-size: 14px; }
+.panel-menu a { display: block; padding: 3px 0; font-size: 13px; text-decoration: none; text-transform: uppercase; }
+.enlaces-cuenta { margin-top: 40px; }
+
+/* WhatsApp */
+.btn-whatsapp { position: fixed; right: 16px; bottom: 16px; width: 56px; height: 56px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); z-index: 10; }
+.btn-whatsapp img { width: 30px; height: 30px; filter: brightness(0) invert(1); }
+
+/* Portada */
+.portada { background: #000 center / cover no-repeat; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; }
+.portada img { width: min(420px, 80%); }
+.portada a { background: #222; color: #fff; padding: 12px 24px; border-radius: 20px; font-size: 12px; font-weight: bold; text-decoration: none; }
+
+/* Catálogo */
+.titulo-pagina { text-align: center; padding: 20px; font-size: 18px; letter-spacing: 2px; }
+.cuadricula { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; padding: 20px; max-width: 1100px; margin: 0 auto; }
+.tarjeta { text-align: center; text-decoration: none; }
+.tarjeta img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border: 4px solid #0B0B0A; border-radius: 40px; background: #ddd; }
+.tarjeta h3 { margin: 10px 0 6px; font-size: 13px; }
+.tarjeta p { margin: 4px 0; }
+.puntos span { display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin: 0 4px; }
+.tarjeta small { font-size: 11px; letter-spacing: 3px; }
+
+/* Detalle de producto */
+.detalle { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 900px; margin: 30px auto; padding: 0 20px; }
+.detalle img { width: 100%; border-radius: 20px; background: #ddd; }
+.detalle p { margin: 8px 0; }
+.detalle select { padding: 8px; }
+.detalle button:disabled { background: #999; cursor: not-allowed; }
+.precio { font-size: 22px; font-weight: bold; margin: 8px 0 16px; }
+@media (max-width: 700px) { .detalle { grid-template-columns: 1fr; } }
+
+/* ================= Pantallas nuevas en React =================
+   Solo clases que no existían en el diseño original: no cambian nada de lo de arriba. */
+
+.contenido { min-height: 60vh; }
+button:disabled { background: #999; cursor: not-allowed; }
+.boton { display: inline-block; text-decoration: none; text-transform: uppercase; }
+.mensaje-centro { text-align: center; padding: 20px; color: var(--gris); }
+.enlace-form { margin-top: 20px; }
+.saludo { font-size: 13px; color: var(--gris); margin-bottom: 8px; }
+.panel-menu .enlaces-cuenta a { padding: 6px 0; }
+.totales .boton { margin-top: 12px; }
+
+/* Mensajes */
+.error { color: #B3261E; }
+.aviso { background: var(--beige); padding: 10px 14px; margin: 10px 0; }
+.enlace { background: none; border: none; padding: 0; color: inherit; text-decoration: underline; cursor: pointer; font: inherit; font-weight: normal; }
+.peligro { color: #B3261E; }
+
+/* Panel de administrador: lista */
+.admin { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+.admin h1, .admin-form h1 { font-size: 18px; letter-spacing: 2px; }
+.admin-barra { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.buscador { width: 100%; max-width: 320px; padding: 10px; border: 1px solid var(--gris); margin: 16px 0; }
+.tabla-admin { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tabla-admin th, .tabla-admin td { text-align: left; padding: 8px; border-bottom: 1px solid var(--beige); vertical-align: middle; }
+.tabla-admin img { width: 48px; height: 60px; object-fit: cover; background: #ddd; }
+.tabla-admin .acciones { white-space: nowrap; }
+.tabla-admin .acciones a, .tabla-admin .acciones button { margin-right: 12px; padding: 0; font-weight: normal; font-size: 14px; }
+
+/* Panel de administrador: formulario */
+.admin-form { max-width: 700px; margin: 30px auto; padding: 0 20px; }
+.admin-form h1 { margin: 16px 0; }
+.admin-form label { display: block; margin-bottom: 12px; font-size: 14px; }
+.admin-form input, .admin-form select, .admin-form textarea { display: block; width: 100%; padding: 10px; margin-top: 4px; border: 1px solid var(--gris); font: inherit; }
+.admin-form input[type='color'] { width: 48px; height: 40px; padding: 2px; margin-top: 0; }
+.admin-form input[type='checkbox'] { display: inline; width: auto; margin-right: 6px; }
+.admin-form fieldset { border: 1px solid var(--beige); margin: 0 0 12px; padding: 12px; }
+.fila { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.fila-color { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+.fila-color input { margin-top: 0; }
+.vista-previa { width: 160px; aspect-ratio: 3 / 4; object-fit: cover; display: block; margin-bottom: 8px; border-radius: 20px; }
+
+@media (max-width: 700px) {
+  .fila { grid-template-columns: 1fr; }
+  .tabla-admin { display: block; overflow-x: auto; }
+}

@@ -120,6 +120,7 @@ CREATE TABLE items_carrito (
     id_carrito INT NOT NULL REFERENCES carritos(id_carrito) ON DELETE CASCADE,
     id_producto INT NOT NULL REFERENCES productos(id_producto) ON DELETE CASCADE,
     id_talla INT REFERENCES tallas(id_talla) ON DELETE CASCADE,
+    id_color INT REFERENCES colores(id_color) ON DELETE SET NULL,
     cantidad INT NOT NULL DEFAULT 1 CHECK (cantidad > 0),
     subtotal NUMERIC(12,2) NOT NULL DEFAULT 0.00
 );
@@ -131,6 +132,8 @@ CREATE TABLE items_pedido (
     id_talla INT REFERENCES tallas(id_talla) ON DELETE SET NULL,
     nombre_producto VARCHAR(150) NOT NULL,
     talla VARCHAR(10),
+    id_color INT REFERENCES colores(id_color) ON DELETE SET NULL,
+    color VARCHAR(50),
     cantidad INT NOT NULL,
     subtotal NUMERIC(12,2) NOT NULL
 );

@@ -1,0 +1,722 @@
+{
+  "categorias": [
+    {
+      "nombre": "Shorts",
+      "genero": "mujer",
+      "tipo": "short"
+    },
+    {
+      "nombre": "Faldas",
+      "genero": "mujer",
+      "tipo": "falda"
+    },
+    {
+      "nombre": "Leggings",
+      "genero": "mujer",
+      "tipo": "leggings"
+    },
+    {
+      "nombre": "Tops",
+      "genero": "mujer",
+      "tipo": "top"
+    },
+    {
+      "nombre": "Conjuntos",
+      "genero": "mujer",
+      "tipo": "conjunto"
+    },
+    {
+      "nombre": "Enterizos",
+      "genero": "mujer",
+      "tipo": "enterizo"
+    },
+    {
+      "nombre": "Chaquetas",
+      "genero": "mujer",
+      "tipo": "chaqueta"
+    },
+    {
+      "nombre": "Sacos",
+      "genero": "mujer",
+      "tipo": "saco"
+    },
+    {
+      "nombre": "Camisetas WUT",
+      "genero": "hombre",
+      "tipo": "camiseta"
+    },
+    {
+      "nombre": "Camisetas VIBES",
+      "genero": "hombre",
+      "tipo": "camiseta"
+    },
+    {
+      "nombre": "Camisetas VIBES sin mangas",
+      "genero": "hombre",
+      "tipo": "camiseta"
+    },
+    {
+      "nombre": "Balacas",
+      "genero": "unisex",
+      "tipo": "accesorio"
+    },
+    {
+      "nombre": "Medias",
+      "genero": "unisex",
+      "tipo": "accesorio"
+    }
+  ],
+  "productos": [
+    {
+      "nombre": "Short Wald",
+      "categoria": "Shorts",
+      "genero": "mujer",
+      "precio": 65000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Verde militar",
+          "hex": "#262721"
+        }
+      ],
+      "descripcion": "Short de la colección MUJER de WUT FORCE ARMOUR. Colores: verde militar.",
+      "foto": "short-wald.jpg"
+    },
+    {
+      "nombre": "Short Komk",
+      "categoria": "Shorts",
+      "genero": "mujer",
+      "precio": 65000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M"
+      ],
+      "colores": [
+        {
+          "nombre": "Caqui",
+          "hex": "#E7DCCA"
+        },
+        {
+          "nombre": "Negro",
+          "hex": "#1C1A1D"
+        }
+      ],
+      "descripcion": "Short de la colección MUJER de WUT FORCE ARMOUR. Colores: caqui, negro.",
+      "foto": "short-komk.jpg"
+    },
+    {
+      "nombre": "Short Nu",
+      "categoria": "Shorts",
+      "genero": "mujer",
+      "precio": 65000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Azul",
+          "hex": "#0B1670"
+        },
+        {
+          "nombre": "Negro",
+          "hex": "#1C1A1D"
+        }
+      ],
+      "descripcion": "Short de la colección MUJER de WUT FORCE ARMOUR. Colores: azul, negro.",
+      "foto": "short-nu.jpg"
+    },
+    {
+      "nombre": "Short Shadow",
+      "categoria": "Shorts",
+      "genero": "mujer",
+      "precio": 65000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Negro",
+          "hex": "#1C1A1D"
+        }
+      ],
+      "descripcion": "Short de la colección MUJER de WUT FORCE ARMOUR. Colores: negro.",
+      "foto": "short-shadow.jpg"
+    },
+    {
+      "nombre": "Falda Inertia",
+      "categoria": "Faldas",
+      "genero": "mujer",
+      "precio": 65000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M"
+      ],
+      "colores": [
+        {
+          "nombre": "Negro",
+          "hex": "#1C1A1D"
+        },
+        {
+          "nombre": "Blanco",
+          "hex": "#FFFFFF"
+        }
+      ],
+      "descripcion": "Falda de la colección MUJER de WUT FORCE ARMOUR. Colores: negro, blanco.",
+      "foto": "falda-inertia.jpg"
+    },
+    {
+      "nombre": "Leggings Lang",
+      "categoria": "Leggings",
+      "genero": "mujer",
+      "precio": 78000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Celeste",
+          "hex": "#8096AE"
+        },
+        {
+          "nombre": "Lila",
+          "hex": "#A895B1"
+        },
+        {
+          "nombre": "Gris oscuro",
+          "hex": "#403E3F"
+        }
+      ],
+      "descripcion": "Leggings de la colección MUJER de WUT FORCE ARMOUR. Colores: celeste, lila, gris oscuro.",
+      "foto": "leggings-lang.jpg"
+    },
+    {
+      "nombre": "Leggings Leben",
+      "categoria": "Leggings",
+      "genero": "mujer",
+      "precio": 78000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Café",
+          "hex": "#8F5C47"
+        },
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        }
+      ],
+      "descripcion": "Leggings de la colección MUJER de WUT FORCE ARMOUR. Colores: café, negro.",
+      "foto": "leggings-leben.jpg"
+    },
+    {
+      "nombre": "Leggings Soft",
+      "categoria": "Leggings",
+      "genero": "mujer",
+      "precio": 78000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Verde",
+          "hex": "#B3B174"
+        },
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        }
+      ],
+      "descripcion": "Leggings de la colección MUJER de WUT FORCE ARMOUR. Colores: verde, negro.",
+      "foto": "leggings-soft.jpg"
+    },
+    {
+      "nombre": "Leggings Mond",
+      "categoria": "Leggings",
+      "genero": "mujer",
+      "precio": 78000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M"
+      ],
+      "colores": [
+        {
+          "nombre": "Caqui",
+          "hex": "#C9BAA5"
+        }
+      ],
+      "descripcion": "Leggings de la colección MUJER de WUT FORCE ARMOUR. Colores: caqui.",
+      "foto": "leggings-mond.jpg"
+    },
+    {
+      "nombre": "Leggings Force",
+      "categoria": "Leggings",
+      "genero": "mujer",
+      "precio": 78000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Beige",
+          "hex": "#E7DCCA"
+        },
+        {
+          "nombre": "Negro",
+          "hex": "#1C1A1D"
+        }
+      ],
+      "descripcion": "Leggings de la colección MUJER de WUT FORCE ARMOUR. Colores: beige, negro.",
+      "foto": "leggings-force.jpg"
+    },
+    {
+      "nombre": "Top Atenas",
+      "categoria": "Tops",
+      "genero": "mujer",
+      "precio": 60000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        },
+        {
+          "nombre": "Blanco",
+          "hex": "#FFFFFF"
+        }
+      ],
+      "descripcion": "Top de la colección MUJER de WUT FORCE ARMOUR. Colores: negro, blanco.",
+      "foto": "top-atenas.jpg"
+    },
+    {
+      "nombre": "Top Peach",
+      "categoria": "Tops",
+      "genero": "mujer",
+      "precio": 55000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Beige",
+          "hex": "#DECFBA"
+        }
+      ],
+      "descripcion": "Top de la colección MUJER de WUT FORCE ARMOUR. Colores: beige.",
+      "foto": "top-peach.jpg"
+    },
+    {
+      "nombre": "Top Dunkel",
+      "categoria": "Tops",
+      "genero": "mujer",
+      "precio": 60000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M"
+      ],
+      "colores": [
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        },
+        {
+          "nombre": "Blanco",
+          "hex": "#FFFFFF"
+        }
+      ],
+      "descripcion": "Top de la colección MUJER de WUT FORCE ARMOUR. Colores: negro, blanco.",
+      "foto": "top-dunkel.jpg"
+    },
+    {
+      "nombre": "Top Arya",
+      "categoria": "Tops",
+      "genero": "mujer",
+      "precio": 40000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M"
+      ],
+      "colores": [
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        }
+      ],
+      "descripcion": "Top de la colección MUJER de WUT FORCE ARMOUR. Colores: negro.",
+      "foto": "top-arya.jpg"
+    },
+    {
+      "nombre": "Top Core",
+      "categoria": "Tops",
+      "genero": "mujer",
+      "precio": 60000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        }
+      ],
+      "descripcion": "Top de la colección MUJER de WUT FORCE ARMOUR. Colores: negro.",
+      "foto": "top-core.jpg"
+    },
+    {
+      "nombre": "Conjunto Faust",
+      "categoria": "Conjuntos",
+      "genero": "mujer",
+      "precio": 150000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M"
+      ],
+      "colores": [
+        {
+          "nombre": "Caqui oscuro",
+          "hex": "#8A7771"
+        }
+      ],
+      "descripcion": "Conjunto de la colección MUJER de WUT FORCE ARMOUR. Colores: caqui oscuro.",
+      "foto": "conjunto-faust.jpg"
+    },
+    {
+      "nombre": "Conjunto Energie",
+      "categoria": "Conjuntos",
+      "genero": "mujer",
+      "precio": 115000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M"
+      ],
+      "colores": [
+        {
+          "nombre": "Caqui",
+          "hex": "#DECFBA"
+        },
+        {
+          "nombre": "Morado",
+          "hex": "#BBAED9"
+        }
+      ],
+      "descripcion": "Conjunto de la colección MUJER de WUT FORCE ARMOUR. Colores: caqui, morado.",
+      "foto": "conjunto-energie.jpg"
+    },
+    {
+      "nombre": "Conjunto Gaia",
+      "categoria": "Conjuntos",
+      "genero": "mujer",
+      "precio": 115000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Café",
+          "hex": "#8A7771"
+        },
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        }
+      ],
+      "descripcion": "Conjunto de la colección MUJER de WUT FORCE ARMOUR. Colores: café, negro.",
+      "foto": "conjunto-gaia.jpg"
+    },
+    {
+      "nombre": "Conjunto Luft",
+      "categoria": "Conjuntos",
+      "genero": "mujer",
+      "precio": 115000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M"
+      ],
+      "colores": [
+        {
+          "nombre": "Café",
+          "hex": "#2D1B19"
+        },
+        {
+          "nombre": "Agua marina",
+          "hex": "#122232"
+        },
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        }
+      ],
+      "descripcion": "Conjunto de la colección MUJER de WUT FORCE ARMOUR. Colores: café, agua marina, negro.",
+      "foto": "conjunto-luft.jpg"
+    },
+    {
+      "nombre": "Enterizo Shade",
+      "categoria": "Enterizos",
+      "genero": "mujer",
+      "precio": 135000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        },
+        {
+          "nombre": "Verde",
+          "hex": "#B3B174"
+        }
+      ],
+      "descripcion": "Enterizo de la colección MUJER de WUT FORCE ARMOUR. Colores: negro, verde.",
+      "foto": "enterizo-shade.jpg"
+    },
+    {
+      "nombre": "Chaqueta WUT",
+      "categoria": "Chaquetas",
+      "genero": "mujer",
+      "precio": 65000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        },
+        {
+          "nombre": "Gris",
+          "hex": "#7D767D"
+        }
+      ],
+      "descripcion": "Chaqueta de la colección MUJER de WUT FORCE ARMOUR. Colores: negro, gris.",
+      "foto": "chaqueta-wut.jpg"
+    },
+    {
+      "nombre": "Saco Howl",
+      "categoria": "Sacos",
+      "genero": "mujer",
+      "precio": 60000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M"
+      ],
+      "colores": [
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        }
+      ],
+      "descripcion": "Saco de la colección MUJER de WUT FORCE ARMOUR. Colores: negro.",
+      "foto": "saco-howl.jpg"
+    },
+    {
+      "nombre": "Camiseta WUT Force Armour",
+      "categoria": "Camisetas WUT",
+      "genero": "hombre",
+      "precio": 60000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Caqui",
+          "hex": "#C3B8A6"
+        },
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        },
+        {
+          "nombre": "Blanco",
+          "hex": "#FFFFFF"
+        }
+      ],
+      "descripcion": "Camisetas WUT de la colección HOMBRE de WUT FORCE ARMOUR. Colores: caqui, negro, blanco.",
+      "foto": "camiseta-wut-force-armour.jpg"
+    },
+    {
+      "nombre": "Camiseta WUT Lobo",
+      "categoria": "Camisetas WUT",
+      "genero": "hombre",
+      "precio": 60000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Caqui",
+          "hex": "#D0BFAB"
+        },
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        },
+        {
+          "nombre": "Blanco",
+          "hex": "#FFFFFF"
+        }
+      ],
+      "descripcion": "Camisetas WUT de la colección HOMBRE de WUT FORCE ARMOUR. Colores: caqui, negro, blanco.",
+      "foto": "camiseta-wut-lobo.jpg"
+    },
+    {
+      "nombre": "Camiseta Vibes",
+      "categoria": "Camisetas VIBES",
+      "genero": "hombre",
+      "precio": 60000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Verde militar",
+          "hex": "#3A433E"
+        },
+        {
+          "nombre": "Beige",
+          "hex": "#D0BFAB"
+        },
+        {
+          "nombre": "Gris",
+          "hex": "#7F6E67"
+        }
+      ],
+      "descripcion": "Camisetas VIBES de la colección HOMBRE de WUT FORCE ARMOUR. Colores: verde militar, beige, gris.",
+      "foto": "camiseta-vibes.jpg"
+    },
+    {
+      "nombre": "Camiseta Vibes sin mangas",
+      "categoria": "Camisetas VIBES sin mangas",
+      "genero": "hombre",
+      "precio": 60000,
+      "cantidad": 20,
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colores": [
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        },
+        {
+          "nombre": "Beige",
+          "hex": "#D0BFAB"
+        }
+      ],
+      "descripcion": "Camisetas VIBES sin mangas de la colección HOMBRE de WUT FORCE ARMOUR. Colores: negro, beige.",
+      "foto": "camiseta-vibes-sin-mangas.jpg"
+    },
+    {
+      "nombre": "Balaca Kop",
+      "categoria": "Balacas",
+      "genero": "unisex",
+      "precio": 10000,
+      "cantidad": 20,
+      "tallas": [
+        "Única"
+      ],
+      "colores": [
+        {
+          "nombre": "Caqui",
+          "hex": "#A49284"
+        },
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        },
+        {
+          "nombre": "Hueso",
+          "hex": "#FDF5E2"
+        }
+      ],
+      "descripcion": "Balacas de la colección ACCESORIOS de WUT FORCE ARMOUR. Colores: caqui, negro, hueso.",
+      "foto": "balaca-kop.jpg"
+    },
+    {
+      "nombre": "Medias WUT",
+      "categoria": "Medias",
+      "genero": "unisex",
+      "precio": 10000,
+      "cantidad": 20,
+      "tallas": [
+        "Única"
+      ],
+      "colores": [
+        {
+          "nombre": "Blanco",
+          "hex": "#FFFFFF"
+        },
+        {
+          "nombre": "Negro",
+          "hex": "#000000"
+        }
+      ],
+      "descripcion": "Medias de la colección ACCESORIOS de WUT FORCE ARMOUR. Colores: blanco, negro.",
+      "foto": "medias-wut.jpg"
+    }
+  ]
+}
