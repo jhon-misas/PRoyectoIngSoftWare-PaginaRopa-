@@ -57,7 +57,7 @@ export default function Pago() {
           : (
             <>
               <h2>Resumen del pedido</h2>
-              {carrito.items.map((it) => <p key={it.idItem}>{it.nombre} · Talla {it.talla || '-'} · x{it.cantidad}</p>)}
+              {carrito.items.map((it) => <p key={it.idItem}>{it.nombre} · Talla {it.talla || '-'}{it.color ? ' · ' + it.color : ''} · x{it.cantidad}</p>)}
               <p>Subtotal: {formatoCOP(carrito.subtotal)}</p>
               <p>Envío: {formatoCOP(carrito.envio)}</p>
               <p><strong>Total: COP {formatoCOP(carrito.total)}</strong></p>

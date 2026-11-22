@@ -103,11 +103,12 @@ router.post('/', verificarToken, async (req, res) => {
     const idCarrito = carrito.rows[0].id_carrito;
 
     const items = await cliente.query(
-      `SELECT i.id_producto, i.id_talla, i.cantidad, p.nombre,
-              p.precio::float AS precio, t.nombre AS talla
+      `SELECT i.id_producto, i.id_talla, i.id_color, i.cantidad, p.nombre,
+              p.precio::float AS precio, t.nombre AS talla, c.nombre AS color
        FROM items_carrito i
        JOIN productos p ON p.id_producto = i.id_producto
        LEFT JOIN tallas t ON t.id_talla = i.id_talla
+       LEFT JOIN colores c ON c.id_color = i.id_color
        WHERE i.id_carrito = $1`,
       [idCarrito]
     );
@@ -127,9 +128,9 @@ router.post('/', verificarToken, async (req, res) => {
 
     for (const it of items.rows) {
       await cliente.query(
-        `INSERT INTO items_pedido (id_pedido, id_producto, id_talla, nombre_producto, talla, cantidad, subtotal)
-         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-        [idPedido, it.id_producto, it.id_talla, it.nombre, it.talla, it.cantidad, it.precio * it.cantidad]
+        `INSERT INTO items_pedido (id_pedido, id_producto, id_talla, id_color, nombre_producto, talla, color, cantidad, subtotal)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+        [idPedido, it.id_producto, it.id_talla, it.id_color, it.nombre, it.talla, it.color, it.cantidad, it.precio * it.cantidad]
       );
     }
 
