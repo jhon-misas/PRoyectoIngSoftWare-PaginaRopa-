@@ -18,10 +18,12 @@ async function obtenerIdCarrito(idUsuario) {
 async function armarCarrito(idCarrito) {
   const r = await pool.query(
     `SELECT i.id_item, i.id_producto, p.nombre, p.foto, t.nombre AS talla,
+            c.nombre AS color, c.codigo_hex AS hex_color,
             p.precio::float AS precio, i.cantidad
      FROM items_carrito i
      JOIN productos p ON p.id_producto = i.id_producto
      LEFT JOIN tallas t ON t.id_talla = i.id_talla
+     LEFT JOIN colores c ON c.id_color = i.id_color
      WHERE i.id_carrito = $1
      ORDER BY i.id_item`,
     [idCarrito]
@@ -32,6 +34,8 @@ async function armarCarrito(idCarrito) {
     nombre: f.nombre,
     foto: f.foto,
     talla: f.talla,
+    color: f.color,
+    hexColor: f.hex_color,
     precio: f.precio,
     cantidad: f.cantidad,
     subtotal: f.precio * f.cantidad
@@ -57,6 +61,9 @@ router.post('/items', verificarToken, async (req, res) => {
   const idProducto = parseInt(req.body.idProducto, 10);
   const idTalla = parseInt(req.body.idTalla, 10);
   const cantidad = parseInt(req.body.cantidad, 10) || 1;
+  const idColorPedido = req.body.idColor === undefined || req.body.idColor === null || req.body.idColor === ''
+    ? null
+    : parseInt(req.body.idColor, 10);
 
   if (!idProducto || !idTalla || cantidad < 1) {
     return res.status(400).json({ error: 'Faltan datos: producto y talla' });
@@ -76,12 +83,32 @@ router.post('/items', verificarToken, async (req, res) => {
       return res.status(400).json({ error: 'Talla no válida para este producto' });
     }
 
+    // El color debe pertenecer a ese producto. Si el producto tiene colores y no
+    // llega ninguno, se usa el primero (así siguen funcionando clientes antiguos).
+    const colores = await pool.query(
+      'SELECT id_color FROM colores WHERE id_producto = $1 ORDER BY id_color',
+      [idProducto]
+    );
+    let idColor = null;
+    if (colores.rows.length > 0) {
+      if (idColorPedido === null) {
+        idColor = colores.rows[0].id_color;
+      } else if (colores.rows.some((c) => c.id_color === idColorPedido)) {
+        idColor = idColorPedido;
+      } else {
+        return res.status(400).json({ error: 'Color no válido para este producto' });
+      }
+    } else if (idColorPedido !== null) {
+      return res.status(400).json({ error: 'Este producto no tiene colores para elegir' });
+    }
+
     const idCarrito = await obtenerIdCarrito(req.usuario.id);
 
-    // Si ya existe el mismo producto con la misma talla, solo sube la cantidad
+    // Si ya existe el mismo producto con la misma talla y el mismo color, solo sube la cantidad
     const existe = await pool.query(
-      'SELECT id_item FROM items_carrito WHERE id_carrito = $1 AND id_producto = $2 AND id_talla = $3',
-      [idCarrito, idProducto, idTalla]
+      `SELECT id_item FROM items_carrito
+       WHERE id_carrito = $1 AND id_producto = $2 AND id_talla = $3 AND id_color IS NOT DISTINCT FROM $4`,
+      [idCarrito, idProducto, idTalla, idColor]
     );
     if (existe.rows.length > 0) {
       await pool.query(
@@ -90,8 +117,8 @@ router.post('/items', verificarToken, async (req, res) => {
       );
     } else {
       await pool.query(
-        'INSERT INTO items_carrito (id_carrito, id_producto, id_talla, cantidad) VALUES ($1, $2, $3, $4)',
-        [idCarrito, idProducto, idTalla, cantidad]
+        'INSERT INTO items_carrito (id_carrito, id_producto, id_talla, id_color, cantidad) VALUES ($1, $2, $3, $4, $5)',
+        [idCarrito, idProducto, idTalla, idColor, cantidad]
       );
     }
     res.status(201).json(await armarCarrito(idCarrito));

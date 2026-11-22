@@ -43,7 +43,7 @@ export default function Carrito() {
             <img src={urlFoto(it.foto)} alt={it.nombre} />
             <div className='fila-datos'>
               <Link to={'/producto/' + it.idProducto}><strong>{it.nombre}</strong></Link>
-              <span>Talla {it.talla || '-'}</span>
+              <span>Talla {it.talla || '-'}{it.color ? ' · Color ' + it.color : ''}</span>
               <span>{formatoCOP(it.precio)}</span>
               <div className='cantidad'>
                 <button onClick={() => cambiar(it.idItem, it.cantidad - 1)} aria-label='Quitar uno'>-</button>
